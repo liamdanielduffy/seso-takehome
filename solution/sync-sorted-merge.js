@@ -11,7 +11,7 @@ function mergeAndPrintLogs(sources, printer) {
     }
   });
   while (!queue.isEmpty()) {
-    const entry = queue.dequeue();
+    const entry = queue.pop();
     const log = entry.log;
     const indexOfSource = entry.indexOfSource;
     const source = sources[indexOfSource];

@@ -15,7 +15,7 @@ function mergeAndPrintLogs(sources, printer) {
         if (!log.data) {
           acc.numUndrainedSources--;
         } else {
-          acc.queue.enqueue(log);
+          acc.queue.push(log);
           if (!acc.sourcesInQueue[log.sourceIndex]) {
             acc.sourcesInQueue[log.sourceIndex] = true;
             acc.numSourcesInQueue++;
@@ -41,7 +41,7 @@ function mergeAndPrintLogs(sources, printer) {
           acc.numSourcesInQueue === acc.numUndrainedSources &&
           !acc.queue.isEmpty()
         ) {
-          const log = acc.queue.dequeue();
+          const log = acc.queue.pop();
           printer.print(log.data);
           acc.sourcesInQueue[log.sourceIndex] = false;
           acc.numSourcesInQueue--;
@@ -50,7 +50,7 @@ function mergeAndPrintLogs(sources, printer) {
       error: reject,
       complete: () => {
         while (lastAcc && !lastAcc.queue.isEmpty()) {
-          const log = lastAcc.queue.dequeue();
+          const log = lastAcc.queue.pop();
           printer.print(log.data);
         }
         printer.done();
