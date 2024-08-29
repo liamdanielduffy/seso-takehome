@@ -1,5 +1,22 @@
 "use strict";
 
+/**
+ * Time Complexity: O(N log K), where N is the total number of log entries and K is the number of sources
+ * - Each log entry is processed once, involving a push and pop operation on the priority queue (O(log K) each)
+ * - We process all N log entries, so the total time complexity is O(N log K)
+ *
+ * Space Complexity: O(K), where K is the number of sources
+ * - The priority queue stores at most one entry per source at any given time
+ * - We maintain a fixed number of additional data structures (subjects, arrays) with size proportional to K
+ * - The space used for processing individual log entries is constant and doesn't affect the overall complexity
+ *
+ * Performance Notes:
+ * - This solution waits for all sources to have an entry in the queue
+ *   before printing, which means printing is only as fast as the slowest source
+ * - If some sources produce entries much faster than others, their entries may accumulate in the queue,
+ *   potentially leading to high memory usage.
+ */
+
 const { Subject, merge } = require("rxjs");
 const { scan } = require("rxjs/operators");
 const { MinPriorityQueue } = require("@datastructures-js/priority-queue");
